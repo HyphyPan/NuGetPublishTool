@@ -11,16 +11,28 @@ namespace NuGetPublishTool.ConfigurationData
         [ConfigurationProperty("ExePath")]
         public string ExePath
         {
-            get => (string)this["ExePath"];
-            set => this["ExePath"] = value;
+            get
+            {
+                return (string) this["ExePath"];
+            }
+            set
+            {
+                this["ExePath"] = value;
+            }
         }
 
         [ConfigurationProperty("PackageSources", IsDefaultCollection = false)]
         [ConfigurationCollection(typeof(NuGetSourceInfo), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap, RemoveItemName = "remove")]
         public NuGetSourceConllection PackageSources
         {
-            get => (NuGetSourceConllection)base["PackageSources"];
-            set => base["PackageSources"] = value;
+            get
+            {
+                return (NuGetSourceConllection) base["PackageSources"];
+            }
+            set
+            {
+                base["PackageSources"] = value;
+            }
         }
     }
 
@@ -37,7 +49,10 @@ namespace NuGetPublishTool.ConfigurationData
 
         public NuGetSourceInfo this[int i]
         {
-            get => (NuGetSourceInfo)base.BaseGet(i);
+            get
+            {
+                return (NuGetSourceInfo) base.BaseGet(i);
+            }
         }
     }
 
@@ -46,22 +61,40 @@ namespace NuGetPublishTool.ConfigurationData
         [ConfigurationProperty("Name")]
         public string Name
         {
-            get => (string)this["Name"];
-            set => this["Name"] = value;
+            get
+            {
+                return (string) this["Name"];
+            }
+            set
+            {
+                this["Name"] = value;
+            }
         }
 
         [ConfigurationProperty("Path")]
         public string Path
         {
-            get => (string)this["Path"];
-            set => this["Path"] = value;
+            get
+            {
+                return (string) this["Path"];
+            }
+            set
+            {
+                this["Path"] = value;
+            }
         }
 
         [ConfigurationProperty("HasKey")]
         public bool HasKey
         {
-            get => (bool)this["HasKey"];
-            set => this["HasKey"] = value;
+            get
+            {
+                return (bool) this["HasKey"];
+            }
+            set
+            {
+                this["HasKey"] = value;
+            }
         }
     }
 }
