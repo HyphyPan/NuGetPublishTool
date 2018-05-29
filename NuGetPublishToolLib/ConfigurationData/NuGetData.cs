@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Configuration;
 
-namespace NuGetPublishTool.ConfigurationData
+namespace NuGetPublishToolLib.ConfigurationData
 {
     public class NuGetData : ConfigurationSection
     {
@@ -13,7 +13,7 @@ namespace NuGetPublishTool.ConfigurationData
         {
             get
             {
-                return (string) this["ExePath"];
+                return (string)this["ExePath"];
             }
             set
             {
@@ -22,14 +22,16 @@ namespace NuGetPublishTool.ConfigurationData
         }
 
         [ConfigurationProperty("PackageSources", IsDefaultCollection = false)]
-        [ConfigurationCollection(typeof(NuGetSourceInfo), CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap, RemoveItemName = "remove")]
+        [ConfigurationCollection(typeof(NuGetSourceInfo),
+            CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap,
+            RemoveItemName = "remove")]
         public NuGetSourceConllection PackageSources
         {
             get
             {
-                return (NuGetSourceConllection) base["PackageSources"];
+                return (NuGetSourceConllection)base["PackageSources"];
             }
-            set
+            internal set
             {
                 base["PackageSources"] = value;
             }
@@ -51,8 +53,31 @@ namespace NuGetPublishTool.ConfigurationData
         {
             get
             {
-                return (NuGetSourceInfo) base.BaseGet(i);
+                return (NuGetSourceInfo)base.BaseGet(i);
             }
+        }
+
+        public NuGetSourceInfo this[string key]
+        {
+            get
+            {
+                return (NuGetSourceInfo)base.BaseGet(key);
+            }
+        }
+
+        internal void Add(NuGetSourceInfo info)
+        {
+            base.BaseAdd(info);
+        }
+
+        internal void Remove(string name)
+        {
+            base.BaseRemove(name);
+        }
+
+        internal void Clear()
+        {
+            base.BaseClear();
         }
     }
 
@@ -63,9 +88,9 @@ namespace NuGetPublishTool.ConfigurationData
         {
             get
             {
-                return (string) this["Name"];
+                return (string)this["Name"];
             }
-            set
+            internal set
             {
                 this["Name"] = value;
             }
@@ -76,9 +101,9 @@ namespace NuGetPublishTool.ConfigurationData
         {
             get
             {
-                return (string) this["Path"];
+                return (string)this["Path"];
             }
-            set
+            internal set
             {
                 this["Path"] = value;
             }
@@ -89,9 +114,9 @@ namespace NuGetPublishTool.ConfigurationData
         {
             get
             {
-                return (bool) this["HasKey"];
+                return (bool)this["HasKey"];
             }
-            set
+            internal set
             {
                 this["HasKey"] = value;
             }

@@ -7,8 +7,8 @@
     <ProjectGuid>{8DED38E1-00BC-4D6D-8434-F94802E292D4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>NuGetPublishTool</RootNamespace>
-    <AssemblyName>NuGetPublishTool</AssemblyName>
+    <RootNamespace>NuGetPublishToolLib</RootNamespace>
+    <AssemblyName>NuGetPublishToolLib</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile>
@@ -44,8 +44,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigurationData\ConfigDataFactory.cs" />
+    <Compile Include="ConfigurationData\IConfigDataHandler.cs" />
     <Compile Include="ConfigurationData\NuGetData.cs" />
+    <Compile Include="ConfigurationData\NuGetDataHandler.cs" />
+    <Compile Include="ConfigurationData\ProjectData.cs" />
+    <Compile Include="ConfigurationData\SolutionData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
