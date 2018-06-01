@@ -6,10 +6,10 @@ using System.Text;
 
 namespace NuGetPublishToolLib.ConfigurationData
 {
-    public interface IConfigDataHandler
+    public abstract class AppConfigData : ConfigurationSection
     {
-        string Save(ConfigurationSection data);
+        public abstract string CheckValid();
 
-        string IsValid(ConfigurationSection data);
+        public abstract void CopyFrom(AppConfigData sourceData);
     }
 }

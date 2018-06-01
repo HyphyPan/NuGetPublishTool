@@ -1,40 +1,92 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections;
+using System.Collections.Specialized;
 using System.Linq;
 using System.Text;
 using System.Configuration;
+using System.IO;
 
 namespace NuGetPublishToolLib.ConfigurationData
 {
-    public class NuGetData : ConfigurationSection
+    public class NuGetData : AppConfigData
     {
         [ConfigurationProperty("ExePath")]
         public string ExePath
         {
             get
             {
-                return (string)this["ExePath"];
+                return (string)base["ExePath"];
             }
             set
             {
-                this["ExePath"] = value;
+                base["ExePath"] = value;
+                string validInfo = this.CheckValid();
+                if (string.IsNullOrEmpty(validInfo))
+                {
+                    this.FillOuterData();
+                }
+                else
+                {
+                    throw new Exception(validInfo);
+                }
             }
         }
 
-        [ConfigurationProperty("PackageSources", IsDefaultCollection = false)]
+        [ConfigurationProperty("", IsDefaultCollection = true)]
         [ConfigurationCollection(typeof(NuGetSourceInfo),
             CollectionType = ConfigurationElementCollectionType.AddRemoveClearMap,
-            RemoveItemName = "remove")]
+            RemoveItemName = "remove", AddItemName = "PackageSource")]
         public NuGetSourceConllection PackageSources
         {
             get
             {
-                return (NuGetSourceConllection)base["PackageSources"];
+                return (NuGetSourceConllection)this[""];
             }
             internal set
             {
-                base["PackageSources"] = value;
+                this[""] = value;
             }
+        }
+
+        public override string CheckValid()
+        {
+            if (!File.Exists(this.ExePath))
+            {
+                return "文件路径不存在";
+            }
+
+            DirectoryInfo directory = new DirectoryInfo(this.ExePath);
+            if (!directory.Name.ToLower().Equals("nuget.exe"))
+            {
+                return "该文件非nuget.exe";
+            }
+
+            return string.Empty;
+        }
+
+        public override void CopyFrom(AppConfigData sourceData)
+        {
+            NuGetData data = sourceData as NuGetData;
+            this.ExePath = data.ExePath;
+            this.PackageSources = data.PackageSources;
+        }
+
+        private void FillOuterData()
+        {
+            string appdataPath =
+                    Environment.GetFolderPath(Environment
+                                                      .SpecialFolder
+                                                      .ApplicationData);
+            string msNuGetConfigPath =
+                    Path.Combine(appdataPath, @"NuGet\NuGet.Config");
+            if (!File.Exists(msNuGetConfigPath))
+            {
+                return;
+            }
+
+            // TODO:Read config from NuGet.config.
+            //this.PackageSources.Add(info);
         }
     }
 

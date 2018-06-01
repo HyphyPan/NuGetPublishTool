@@ -45,9 +45,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ConfigurationData\ConfigDataFactory.cs" />
-    <Compile Include="ConfigurationData\IConfigDataHandler.cs" />
+    <Compile Include="ConfigurationData\AppConfigData.cs" />
+    <Compile Include="ConfigurationData\MsNuGetData.cs" />
     <Compile Include="ConfigurationData\NuGetData.cs" />
-    <Compile Include="ConfigurationData\NuGetDataHandler.cs" />
     <Compile Include="ConfigurationData\ProjectData.cs" />
     <Compile Include="ConfigurationData\SolutionData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
